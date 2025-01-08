@@ -90,7 +90,7 @@ const TeamOverview = () => {
                 {getMedalIcon(index) && (
                   <img
                     src={getMedalIcon(index)}
-                    alt="Medal"
+                    
                     className="h-full w-auto object-contain"
                   />
                 )}

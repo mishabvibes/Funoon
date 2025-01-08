@@ -5,7 +5,7 @@ import NavBar from "./Components/Header/NavBar";
 import CursorAnimation from "./Components/Cursor/CursorAnimation";
 import { ProtectedRoute } from "./Components/AdminLogin/AdminLogin";
 import PWAInstallPrompt from "./Components/PWAInstallPrompt/PWAInstallPrompt";
-import ComingSoon from "./Pages/ComingSoon";
+// import ComingSoon from "./Pages/ComingSoon";
 
 // Lazy load components with loading boundaries
 const Home = lazy(() => import("./Pages/Home"));
@@ -16,12 +16,12 @@ const AddResult = lazy(() => import("./Pages/AddResult"));
 const CartPage = lazy(() => import("./Pages/CartPage"));
 const ScoreTable = lazy(() => import("./Pages/ScoreTable"));
 
-const IS_COMINGSOON = true;
+// const IS_COMINGSOON = true;
 
 function App() {
-  if (IS_COMINGSOON) {
-    return <ComingSoon />
-  }
+  // if (IS_COMINGSOON) {
+  //   return <ComingSoon />
+  // }
   return (
     <BrowserRouter>
       <CursorAnimation />
