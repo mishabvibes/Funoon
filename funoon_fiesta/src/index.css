@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+#root {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+
+/* body {
+  cursor: none;
+} */
+
+*{
+  scroll-behavior: smooth !important;
+}
+
+body.light {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+body.dark {
+  background-color: #191919;
+  color: #ffffff;
+}
+
+
+.circle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.7;
+  /* mix-blend-mode: difference; */
+  mix-blend-mode: multiply;
+  /* Creates an attractive blending effect */
+  transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+}
+
+.circle:hover {
+  width: 30px;
+  height: 30px;
+  opacity: 1;
+}
+
+
+.scale-110 {
+  transform: scale(1.1);
+}
+
+.scale-100 {
+  transform: scale(0.8);
+}
+
+
+
+
+
+
+
+
+
+
+
+.poster-card {
+  aspect-ratio: 3/4;
+  width: 100%;
+  max-width: 450px;
+}
+
+@layer base {
+  img {
+    @apply inline-block;
+  }
+}
