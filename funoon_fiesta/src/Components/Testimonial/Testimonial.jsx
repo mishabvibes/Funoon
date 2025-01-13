@@ -1,43 +1,29 @@
 import React, { useState } from 'react';
-import image1 from '../../assets/img/11.png';
-import image2 from '../../assets/img/21.png';
-import image3 from '../../assets/img/31.png';
-import image4 from '../../assets/img/11.png';
-import image5 from '../../assets/img/21.png';
+import aliKuttyUsthad from '../../assets/img/Usthads/ali-kutty-usthad.webp';
+import kottumalaUsthad from '../../assets/img/Usthads/kottumala-usthad.webp';
+import asgaraliUsthad from '../../assets/img/Usthads/asgarali-usthad.webp';
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Testimonial = () => {
     const Testimonial_data = [
         {
-            img: image1,
-            content_text: "This platform has revolutionized how we manage our projects. It's fast, reliable, and easy to use.",
-            testimonial_name: 'Emily Rose',
-            text_block: 'Project Manager, Buildify',
+            img: aliKuttyUsthad,
+            content_text: "Funun Fiesta is shaping history and engaging with the present. This platform beautifully conveys the messages of Islam to society.",
+            testimonial_name: 'Shikhul Jamia K.Alikutty Musliyar',
+            text_block: 'Principal of collage',
         },
         {
-            img: image2,
-            content_text: "This platform has revolutionized how we manage our projects. It's fast, reliable, and easy to use.",
-            testimonial_name: 'Emily Rose',
-            text_block: 'Project Manager, Buildify',
+            img: kottumalaUsthad,
+            content_text: "Funun Fiesta is a unique platform connecting art with purpose. It beautifully shares the inspiring messages of Islam with society.",
+            testimonial_name: 'Moideen Kutty Musliyar Kottumala',
+            text_block: 'Proffeser of collage',
         },
         {
-            img: image3,
-            content_text: "This platform has revolutionized how we manage our projects. It's fast, reliable, and easy to use.",
-            testimonial_name: 'Emily Rose',
-            text_block: 'Project Manager, Buildify',
-        },
-        {
-            img: image4,
-            content_text: "This platform has revolutionized how we manage our projects. It's fast, reliable, and easy to use.",
-            testimonial_name: 'Emily Rose',
-            text_block: 'Project Manager, Buildify',
-        },
-        {
-            img: image5,
-            content_text: "This platform has revolutionized how we manage our projects. It's fast, reliable, and easy to use.",
-            testimonial_name: 'Emily Rose',
-            text_block: 'Project Manager, Buildify',
+            img: asgaraliUsthad,
+            content_text: "Funun Fiesta beautifully blends creativity with purpose. It serves as a platform to share the inspiring messages of Islam with society.",
+            testimonial_name: 'Asgar Ali Faizy Pattikkad',
+            text_block: 'Lecture',
         },
     ];
     
@@ -83,7 +69,7 @@ const Testimonial = () => {
                                                 <img
                                                     src={item.img}
                                                     alt=""
-                                                    className="w-10 h-10 sm:w-12 sm:h-12 border-2 border-pink-600 rounded-full p-1"
+                                                    className="w-12 h-12 sm:w-14 sm:h-14 border-2 border-pink-600 rounded-full p-0.5"
                                                 />
                                             </div>
                                             <div className="text-left">

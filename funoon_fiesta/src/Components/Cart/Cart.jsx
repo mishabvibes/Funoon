@@ -95,7 +95,8 @@ const Cart = () => {
 
     useEffect(() => {
         refreshResults();
-    }, [refreshResults]);
+    }, []);
+    
 
     const filteredResults = results.filter((result) =>
         result.programName.toLowerCase().includes(searchQuery.toLowerCase())

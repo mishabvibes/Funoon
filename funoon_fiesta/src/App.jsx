@@ -16,12 +16,12 @@ const AddResult = lazy(() => import("./Pages/AddResult"));
 const CartPage = lazy(() => import("./Pages/CartPage"));
 const ScoreTable = lazy(() => import("./Pages/ScoreTable"));
 
-const IS_COMINGSOON = true;
+// const IS_COMINGSOON = true;
 
 function App() {
-  if (IS_COMINGSOON) {
-    return <ComingSoon />
-  }
+  // if (IS_COMINGSOON) {
+  //   return <ComingSoon />
+  // }
   return (
     <BrowserRouter>
       <CursorAnimation />

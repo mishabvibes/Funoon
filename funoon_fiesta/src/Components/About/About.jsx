@@ -45,7 +45,7 @@ const About = () => {
           variants={fadeIn("up", 0.3)}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, amount: 0.7 }}
+          viewport={{ once: true, amount: 0.7 }}
           className="w-full md:w-3/5 flex justify-center items-center">
             <div className="w-3/4 text-center md:text-left mt-12 md:mt-0">
               <h1 className="text-4xl lg:text-7xl font-semibold text-primary">
@@ -66,7 +66,7 @@ const About = () => {
           variants={fadeIn("down", 0.3)}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, amount: 0.7 }}
+          viewport={{ once: true, amount: 0.7 }}
           className="w-full md:w-2/5 flex justify-center items-center relative">
             <div className="w-48 lg:w-64 overflow-hidden">
               <div 

@@ -76,7 +76,7 @@ const TeamOverview = () => {
               variants={fadeIn("right", 0.3)}
               initial="hidden"
               whileInView="show"
-              viewport={{ once: false, amount: 0.7 }}
+              viewport={{ once: true, amount: 0.7 }}
               key={index}
               className="h-11 md:h-14 w-full flex bg-[#D9D9D9] dark:bg-[#FFFFFF] rounded-r-lg md:rounded-r-xl"
             >
@@ -102,7 +102,7 @@ const TeamOverview = () => {
           variants={fadeIn("left", 0.3)}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, amount: 0.7 }}
+          viewport={{ once: true, amount: 0.7 }}
           className='flex justify-center items-center mt-10'
         >
           <button onClick={handleResultRedirect} className='bg-secondery py-3 px-8 md:px-16 rounded-full text-lg md:text-3xl text-white'>
@@ -114,7 +114,7 @@ const TeamOverview = () => {
         variants={fadeIn("down", 0.3)}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: false, amount: 0.7 }}
+        viewport={{ once: true, amount: 0.7 }}
         className="w-full h-36 bg-repeat"
         style={{
           backgroundImage: `url(${HomePattern})`,

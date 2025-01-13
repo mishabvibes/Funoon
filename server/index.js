@@ -34,7 +34,7 @@ app.use(express.static('public', {
 connectDb();
 
 // Routes
-app.use('/api/result', resultRoute);
+app.use('/', resultRoute);
 
 // Handle 404
 app.all('*', (req, res) => {

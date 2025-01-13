@@ -24,7 +24,7 @@ const FirstPage = () => {
             variants={fadeIn("left", 0.3)}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: false, amount: 0.7 }}
+            viewport={{ once: true , amount: 0.7 }}
             className="w-full md:w-3/5 text-start md:text-left mb-8 md:mb-0">
             <div className="max-w-6xl mx-auto md:mx-0">
               <h1 className="text-3xl md:text-6xl font-semibold groupnumbers mb-4 text-secondery">
@@ -48,7 +48,7 @@ const FirstPage = () => {
             variants={fadeIn("right", 0.3)}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: false, amount: 0.7 }}
+            viewport={{ once: true, amount: 0.7 }}
             className="hidden md:flex w-2/5 justify-end items-center">
             <img
               src={HomeImg}

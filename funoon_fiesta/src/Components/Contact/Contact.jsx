@@ -130,7 +130,7 @@ const Contact = () => {
                             variants={fadeIn("up", 0.3)}
                             initial="hidden"
                             whileInView="show"
-                            viewport={{ once: false, amount: 0.7 }}
+                            viewport={{ once: true, amount: 0.7 }}
                             className="w-full md:w-1/2 p-2 md:p-10 flex justify-center items-center">
                             <img
                                 src={Email}
@@ -142,7 +142,7 @@ const Contact = () => {
                             variants={fadeIn("down", 0.3)}
                             initial="hidden"
                             whileInView="show"
-                            viewport={{ once: false, amount: 0.7 }}
+                            viewport={{ once: true, amount: 0.7 }}
                             className="w-full md:w-1/2 p-2 md:p-8">
                             <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3 md:gap-5">
                                 <div className="flex items-center bg-gray-300 rounded-2xl h-10 md:h-12 pl-4 overflow-hidden">
