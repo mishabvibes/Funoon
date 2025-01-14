@@ -5,6 +5,7 @@ import NavBar from "./Components/Header/NavBar";
 import CursorAnimation from "./Components/Cursor/CursorAnimation";
 import { ProtectedRoute } from "./Components/AdminLogin/AdminLogin";
 import PWAInstallPrompt from "./Components/PWAInstallPrompt/PWAInstallPrompt";
+import NotificationManager from "./Components/NotificationManager/NotificationManager";
 // import ComingSoon from "./Pages/ComingSoon";
 
 // Lazy load components with loading boundaries
@@ -27,6 +28,7 @@ function App() {
       <CursorAnimation />
       <NavBar />
       <PWAInstallPrompt />
+      <NotificationManager />
       <Suspense fallback={<LoadingScreen />}>
         <Routes>
           <Route path='/' element={<Home />} />
