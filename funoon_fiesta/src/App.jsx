@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect } from "react";
+import { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoadingScreen from "./Components/LoadingScreen/LoadingScreen";
 import NavBar from "./Components/Header/NavBar";
@@ -18,19 +18,10 @@ const ScoreTable = lazy(() => import("./Pages/ScoreTable"));
 
 // const IS_COMINGSOON = true;
 
-export const generateToken = async () => {
-  const permission = await Notification.requestPermission();
-  console.log(permission);
-};
 function App() {
   // if (IS_COMINGSOON) {
   //   return <ComingSoon />
   // }
-
-  useEffect (() => {
-    generateToken();
-    }, []);
-    
   return (
     <BrowserRouter>
       <CursorAnimation />
