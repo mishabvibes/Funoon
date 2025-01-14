@@ -64,7 +64,7 @@ const FirstPage = () => {
         variants={fadeIn("down", 0.3)}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: false, amount: 0.7 }}
+        viewport={{ once: true, amount: 0.7 }}
         className="w-full h-32 bg-repeat overflow-hidden"
         style={{
           backgroundImage: `url(${HomePattern})`,

@@ -74,7 +74,7 @@ const NavBar = () => {
         variants={fadeIn("left", 0.3)}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: false, amount: 0.7 }}
+        viewport={{ once: true, amount: 0.7 }}
         ref={buttonRef}
         className="md:hidden cursor-pointer z-20"
         onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -92,7 +92,7 @@ const NavBar = () => {
         variants={fadeIn("right", 0.3)}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: false, amount: 0.7 }}
+        viewport={{ once: true, amount: 0.7 }}
         onClick={() => handleNavigation('/')} className="ml-7 cursor-pointer">
         <div className='w-10 h-10 p-1.5 bg-secondery rounded-xl overflow-hidden'>
           <img
@@ -135,7 +135,7 @@ const NavBar = () => {
               variants={fadeIn("up", 0.3)}
               initial="hidden"
               whileInView="show"
-              viewport={{ once: false, amount: 0.7 }}
+              viewport={{ once: true, amount: 0.7 }}
               className="
                 text-black dark:text-white 
                 font-Barlow 
@@ -155,7 +155,7 @@ const NavBar = () => {
           variants={fadeIn("left", 0.3)}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, amount: 0.7 }}
+          viewport={{ once: true, amount: 0.7 }}
           className="md:hidden ml-5 my-6" onClick={handleAuthAction}>
           <button
             className="
@@ -175,7 +175,7 @@ const NavBar = () => {
           variants={fadeIn("left", 0.3)}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, amount: 0.7 }}
+          viewport={{ once: true, amount: 0.7 }}
           className="md:hidden ml-5 my-6 py-3">
           <button
             onClick={() => {
@@ -203,7 +203,7 @@ const NavBar = () => {
         variants={fadeIn("left", 0.3)}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: false, amount: 0.7 }}
+        viewport={{ once: true, amount: 0.7 }}
         className="hidden md:flex items-center space-x-4">
         <button
           onClick={handleAuthAction}
