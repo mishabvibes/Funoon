@@ -5,7 +5,7 @@ import NavBar from "./Components/Header/NavBar";
 import CursorAnimation from "./Components/Cursor/CursorAnimation";
 import { ProtectedRoute } from "./Components/AdminLogin/AdminLogin";
 import PWAInstallPrompt from "./Components/PWAInstallPrompt/PWAInstallPrompt";
-import ComingSoon from "./Pages/ComingSoon";
+// import ComingSoon from "./Pages/ComingSoon";
 
 // Lazy load components with loading boundaries
 const Home = lazy(() => import("./Pages/Home"));

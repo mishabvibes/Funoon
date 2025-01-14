@@ -5,8 +5,9 @@ import { useResults } from '../../../context/DataContext';
 import { Alert, AlertDescription } from '../../Components/ui/alert';
 import axios from 'axios';
 
-const DEBOUNCE_DELAY = 300;
+import { sendNotification } from '../../utils/notifications';
 
+const DEBOUNCE_DELAY = 300;
 const API_URL = import.meta.env.VITE_API_URL;
 
 // Moved outside component to prevent recreating on each render
@@ -28,7 +29,7 @@ const pointsMatrix = {
   }
 };
 
-const calculatePoints = (category, prize, grade) => 
+const calculatePoints = (category, prize, grade) =>
   category && prize && grade ? pointsMatrix[category]?.[prize]?.[grade] || '' : '';
 
 const initialFormState = {
@@ -53,30 +54,30 @@ const AddResultForm = () => {
 
   // Memoized form fields configuration
   const formFields = useMemo(() => [
-    { 
-      name: 'teamName', 
-      icon: <Grid className="w-5 h-5 text-gray-400" />, 
-      options: ['ALEXANDRIA', 'SHATIBIYA', 'MADIYA', 'SHAMIYA', 'IJAZIYYA', 'KAZIMIYYA'] 
+    {
+      name: 'teamName',
+      icon: <Grid className="w-5 h-5 text-gray-400" />,
+      options: ['ALEXANDRIA', 'SHATIBIYA', 'MADIYA', 'SHAMIYA', 'IJAZIYYA', 'KAZIMIYYA']
     },
-    { 
-      name: 'category', 
-      icon: <ListChecks className="w-5 h-5 text-gray-400" />, 
-      options: ['SINGLE', 'GROUP', 'GENERAL'] 
+    {
+      name: 'category',
+      icon: <ListChecks className="w-5 h-5 text-gray-400" />,
+      options: ['SINGLE', 'GROUP', 'GENERAL']
     },
-    { 
-      name: 'stage', 
-      icon: <Star className="w-5 h-5 text-gray-400" />, 
-      options: ['STAGE', 'NON-STAGE'] 
+    {
+      name: 'stage',
+      icon: <Star className="w-5 h-5 text-gray-400" />,
+      options: ['STAGE', 'NON-STAGE']
     },
-    { 
-      name: 'prize', 
-      icon: <Trophy className="w-5 h-5 text-gray-400" />, 
-      options: ['FIRST', 'SECOND', 'THIRD'] 
+    {
+      name: 'prize',
+      icon: <Trophy className="w-5 h-5 text-gray-400" />,
+      options: ['FIRST', 'SECOND', 'THIRD']
     },
-    { 
-      name: 'grade', 
-      icon: <Star className="w-5 h-5 text-gray-400" />, 
-      options: ['A', 'B', 'C'] 
+    {
+      name: 'grade',
+      icon: <Star className="w-5 h-5 text-gray-400" />,
+      options: ['A', 'B', 'C']
     }
   ], []);
 
@@ -94,7 +95,7 @@ const AddResultForm = () => {
       formData.prize,
       formData.grade
     ).toString();
-    
+
     if (calculatedPoints !== formData.points) {
       setFormData(prev => ({
         ...prev,
@@ -106,7 +107,7 @@ const AddResultForm = () => {
   // Duplicate check with debounce
   const checkDuplicate = useCallback(
     (data) => {
-      const isDuplicateEntry = results.some(result => 
+      const isDuplicateEntry = results.some(result =>
         result._id !== state?.result?._id && // Exclude current result when editing
         result.studentName.toLowerCase() === data.studentName.toLowerCase() &&
         result.programName.toLowerCase() === data.programName.toLowerCase() &&
@@ -130,6 +131,29 @@ const AddResultForm = () => {
     setError(null);
   }, [checkDuplicate]);
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (isDuplicate) {
+  //     setError('This result appears to be a duplicate. Please verify the details.');
+  //     return;
+  //   }
+
+  //   setIsSubmitting(true);
+  //   setError(null);
+
+  //   try {
+  //     if (state?.result) {
+  //       await axios.put(`${API_URL}/${state.result._id}`, formData);
+  //     } else {
+  //       await addResult(formData);
+  //     }
+  //     navigate("/cart");
+  //   } catch (error) {
+  //     setError(error.response?.data?.message || 'An error occurred while submitting the form');
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isDuplicate) {
@@ -145,6 +169,13 @@ const AddResultForm = () => {
         await axios.put(`${API_URL}/${state.result._id}`, formData);
       } else {
         await addResult(formData);
+        // Send push notification only for new results, not updates
+        try {
+          await sendNotification(formData);
+        } catch (notificationError) {
+          console.error('Failed to send notification:', notificationError);
+          // Don't set error state here as the result was still successfully added
+        }
       }
       navigate("/cart");
     } catch (error) {
@@ -186,7 +217,7 @@ const AddResultForm = () => {
           {/* Student Name & Program Name inputs */}
           {['studentName', 'programName'].map(field => (
             <div key={field} className="relative">
-              {field === 'studentName' ? 
+              {field === 'studentName' ?
                 <User className="absolute left-3 top-3 w-5 h-5 text-gray-400" /> :
                 <Clipboard className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
               }
@@ -197,9 +228,8 @@ const AddResultForm = () => {
                 value={formData[field]}
                 onChange={handleChange}
                 required
-                className={`w-full pl-10 pr-4 py-3 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none ${
-                  formData[field] ? 'text-black' : 'text-gray-400 dark:text-gray-600'
-                }`}
+                className={`w-full pl-10 pr-4 py-3 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none ${formData[field] ? 'text-black' : 'text-gray-400 dark:text-gray-600'
+                  }`}
               />
             </div>
           ))}
@@ -213,9 +243,8 @@ const AddResultForm = () => {
                 value={formData[field.name]}
                 onChange={handleChange}
                 required
-                className={`w-full pl-10 pr-4 py-3 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none ${
-                  formData[field.name] ? 'text-black' : 'text-gray-400 dark:text-gray-600'
-                }`}
+                className={`w-full pl-10 pr-4 py-3 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none ${formData[field.name] ? 'text-black' : 'text-gray-400 dark:text-gray-600'
+                  }`}
               >
                 <option value="">{`Select ${field.name.charAt(0).toUpperCase() + field.name.slice(1)}`}</option>
                 {field.options.map(option => (
@@ -234,8 +263,7 @@ const AddResultForm = () => {
               placeholder="Points"
               value={formData.points}
               readOnly
-              className={`w-full pl-10 pr-4 py-3 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none ${
-                  formData.points ? 'text-black' : 'text-gray-400 dark:text-gray-600'
+              className={`w-full pl-10 pr-4 py-3 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none ${formData.points ? 'text-black' : 'text-gray-400 dark:text-gray-600'
                 }`}
             />
           </div>
@@ -244,9 +272,8 @@ const AddResultForm = () => {
           <button
             type="submit"
             disabled={isSubmitting || isDuplicate}
-            className={`w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md shadow-md transition duration-300 ${
-              isSubmitting || isDuplicate ? 'opacity-50 cursor-not-allowed' : 'hover:-translate-y-1'
-            }`}
+            className={`w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md shadow-md transition duration-300 ${isSubmitting || isDuplicate ? 'opacity-50 cursor-not-allowed' : 'hover:-translate-y-1'
+              }`}
           >
             {isSubmitting ? 'Submitting...' : state?.result ? 'Update Result' : 'Add Result'}
           </button>
