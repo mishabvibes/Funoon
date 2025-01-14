@@ -31,7 +31,7 @@ const FirstPage = () => {
                 Welcome to Funoon Fiesta
               </h1>
               <p className="mb-6 text-base md:text-lg text-gray-600 dark:text-white">
-                Funoon Fiesta is a premier platform for students to showcase their talents. It highlights the rich art forms of Islamic culture, presenting them to a wider audience. The event fosters creativity, cultural appreciation, and artistic expression. Funoon Fiesta inspires the next generation of artists to shine.
+                Funoon Fiesta is a premier platform for students to showcase their talents. It highlights the rich art forms of Islamic culture, presenting them to a wider audience. The event fosters creativity, cultural appreciation, and artistic expression. 
               </p>
               <button
                 type="button"

@@ -4,6 +4,7 @@ import { Award, User, Trophy, Star, ListChecks, Grid, Clipboard, AlertCircle } f
 import { useResults } from '../../../context/DataContext';
 import { Alert, AlertDescription } from '../../Components/ui/alert';
 import axios from 'axios';
+import { sendNotification } from '../../utils/notifications';
 
 const DEBOUNCE_DELAY = 300;
 
@@ -130,6 +131,29 @@ const AddResultForm = () => {
     setError(null);
   }, [checkDuplicate]);
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (isDuplicate) {
+  //     setError('This result appears to be a duplicate. Please verify the details.');
+  //     return;
+  //   }
+
+  //   setIsSubmitting(true);
+  //   setError(null);
+
+  //   try {
+  //     if (state?.result) {
+  //       await axios.put(`${API_URL}/${state.result._id}`, formData);
+  //     } else {
+  //       await addResult(formData);
+  //     }
+  //     navigate("/cart");
+  //   } catch (error) {
+  //     setError(error.response?.data?.message || 'An error occurred while submitting the form');
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isDuplicate) {
@@ -145,6 +169,8 @@ const AddResultForm = () => {
         await axios.put(`${API_URL}/${state.result._id}`, formData);
       } else {
         await addResult(formData);
+        // Send notification only for new results, not updates
+        await sendNotification(formData);
       }
       navigate("/cart");
     } catch (error) {
