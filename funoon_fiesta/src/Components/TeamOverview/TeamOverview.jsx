@@ -90,7 +90,7 @@ const TeamOverview = () => {
                 {getMedalIcon(index) && (
                   <img
                     src={getMedalIcon(index)}
-                    
+
                     className="h-full w-auto object-contain"
                   />
                 )}
@@ -115,10 +115,11 @@ const TeamOverview = () => {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.7 }}
-        className="w-full h-36 bg-repeat"
+        className="w-full h-32 bg-repeat overflow-hidden"
         style={{
           backgroundImage: `url(${HomePattern})`,
-          backgroundSize: '140px',
+          backgroundSize: '152px',
+          paddingBottom:'120px',
         }}
       />
     </section>
