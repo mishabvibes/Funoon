@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import logo from '../../assets/img/festlogo.png';
+import logo from '../../assets/img/HomeImg/festlogo.webp';
 const LoadingScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingText, setLoadingText] = useState('Loading');
