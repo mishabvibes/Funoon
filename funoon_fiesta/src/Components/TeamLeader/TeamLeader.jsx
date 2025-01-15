@@ -4,10 +4,12 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination, Autoplay } from 'swiper/modules';
 import Testimonial from '../Testimonial/Testimonial';
-import img1 from "../../assets/img/Leaders/1.webp";
-import img2 from "../../assets/img/Leaders/2.webp";
-import img3 from "../../assets/img/Leaders/3.webp";
-import img4 from "../../assets/img/Leaders/4.webp";
+import ALEXANDRIA from "../../assets/img/Leaders/ALEXANDRIA.webp";
+import IJAZIYYA from "../../assets/img/Leaders/IJAZIYYA.webp";
+import KAZIMIYYA from "../../assets/img/Leaders/KAZIMIYYA.webp";
+import MADIYA from "../../assets/img/Leaders/MADIYA.webp";
+import SHAMIYA from "../../assets/img/Leaders/SHAMIYA.webp";
+import SHATIBIYA from "../../assets/img/Leaders/SHATIBIYA.webp";
 import { motion } from 'framer-motion';
 import { fadeIn } from '../FrameMotion/variants';
 
@@ -15,28 +17,41 @@ const TeamLeader = () => {
   const teamLeaders = [
     { 
       id: 1, 
-      name:  "Saeed",
-      role: "Group Leader",
-      image: img1,
+      name:  "Basheer & Saeed ",
+      role: "ALEXANDRIA Group Leaders",
+      image: ALEXANDRIA,
     },
     { 
       id: 2, 
-      name: "Qasim", 
-      role: "Group Leader",
-      image: img2,
+      name: "Fasil Ashkari & Safwan",
+      role: "IJAZIYYA Group Leaders",
+      image: IJAZIYYA,
     },
     { 
       id: 3, 
-      name: "Basheer", 
-      role: "Group Leader",
-      image: img3,
+      name: "Ajmal & Saifullah", 
+      role: "KAZIMIYYA Group Leaders",
+      image: KAZIMIYYA,
     },
     { 
       id: 4, 
-      name: "Shareef", 
-      role: "Group Leader",
-      image: img4,
+      name: "Safwan & Anvar ali", 
+      role: "MADIYYA Group Leader",
+      image: MADIYA,
     },
+    { 
+      id: 4, 
+      name: "Qasim & Sahal", 
+      role: "SHAMIYYA Group Leaders",
+      image: SHAMIYA,
+    },
+    { 
+      id: 4, 
+      name: "Hamdan & Murshid", 
+      role: "SHATIBIYYA Group Leaders",
+      image: SHATIBIYA,
+    },
+    
   ];
 
   const [activeIndex, setActiveIndex] = useState(0);

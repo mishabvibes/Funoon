@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { fadeIn } from '../FrameMotion/variants';
 import { useResults } from '../../../context/DataContext';
 import { useNavigate } from 'react-router-dom';
-
+import LOGO from '../../assets/img/HomeImg/festlogo.webp'
 const TeamOverview = () => {
   const { results } = useResults();
   const navigate = useNavigate();
@@ -85,15 +85,16 @@ const TeamOverview = () => {
               </div>
               <div className="w-full bg-secondary h-full flex p-5 rounded-r-xl py-2 justify-between items-center">
                 <h1 className="text-md md:text-xl lg:text-2xl font-light text-black">
-                  {team.teamName} <span>({team.totalPoints})</span>
+                  {team.teamName} <span className='font-medium'>({team.totalPoints})</span>
                 </h1>
                 {getMedalIcon(index) && (
+                  <img src={LOGO} alt="Logo"  className='hidden'/>,
                   <img
                     src={getMedalIcon(index)}
                     className="h-full w-auto object-contain"
                   />
                 )}
-              </div>
+              </div> 
             </motion.div>
           ))}
         </div>
