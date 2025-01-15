@@ -25,14 +25,14 @@ const FirstPage = () => {
             variants={fadeIn("left", 0.3)}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true , amount: 0.7 }}
-            className="hidden md:block w-full md:w-3/5 text-start md:text-left mb-8 md:mb-0">
+            viewport={{ once: true, amount: 0.7 }}
+            className="hidden md:block w-full md:w-full text-start md:text-left mb-8 md:mb-0">
             <div className="max-w-6xl mx-auto md:mx-0">
               <h1 className="text-3xl md:text-6xl font-semibold groupnumbers mb-4 text-secondery">
                 Welcome to Funoon Fiesta
               </h1>
               <p className="mb-6 text-base md:text-lg text-gray-600 dark:text-white">
-                Funoon Fiesta is a premier platform for students to showcase their talents. It highlights the rich art forms of Islamic culture, presenting them to a wider audience. The event fosters creativity, cultural appreciation, and artistic expression. 
+                Funoon Fiesta is a premier platform for students to showcase their talents. It highlights the rich art forms of Islamic culture, presenting them to a wider audience. The event fosters creativity, cultural appreciation, and artistic expression.
               </p>
               <button
                 type="button"
@@ -59,7 +59,7 @@ const FirstPage = () => {
           </motion.div>
 
           <motion.div
-            variants={fadeIn("right", 0.3)}
+            variants={fadeIn("down", 0.3)}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.7 }}
@@ -69,13 +69,17 @@ const FirstPage = () => {
               alt="Funoon Fiesta Logo"
               className="max-w-[500px] w-full h-auto object-contain"
             />
-            <button
-                type="button"
-                onClick={handleResultRedirect}
-                className="w-2/3 text-center md:w-auto px-6 py-3 text-white bg-secondery rounded-md hover:bg-opacity-90 transition-colors"
-              >
-                View Results
-              </button>
+            <motion.button
+              variants={fadeIn("up", 0.3)}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.7 }}
+              type="button"
+              onClick={handleResultRedirect}
+              className="w-2/3 text-center md:w-auto px-6 py-3 text-white bg-secondery rounded-md hover:bg-opacity-90 transition-colors"
+            >
+              View Results
+            </motion.button>
           </motion.div>
         </div>
       </div>
