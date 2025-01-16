@@ -40,13 +40,13 @@ const TeamLeader = () => {
       image: MADIYA,
     },
     { 
-      id: 4, 
+      id: 5, 
       name: "Qasim & Sahal", 
       role: "SHAMIYYA Group Leaders",
       image: SHAMIYA,
     },
     { 
-      id: 4, 
+      id: 6, 
       name: "Hamdan & Murshid", 
       role: "SHATIBIYYA Group Leaders",
       image: SHATIBIYA,
