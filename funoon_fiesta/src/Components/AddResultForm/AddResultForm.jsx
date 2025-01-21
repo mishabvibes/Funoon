@@ -7,7 +7,7 @@ import axios from 'axios';
 
 const DEBOUNCE_DELAY = 300;
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL.replace(/\/$/, '');
 
 // Moved outside component to prevent recreating on each render
 const pointsMatrix = {
@@ -130,6 +130,29 @@ const AddResultForm = () => {
     setError(null);
   }, [checkDuplicate]);
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (isDuplicate) {
+  //     setError('This result appears to be a duplicate. Please verify the details.');
+  //     return;
+  //   }
+
+  //   setIsSubmitting(true);
+  //   setError(null);
+
+  //   try {
+  //     if (state?.result) {
+  //       await axios.put(`${API_URL}/${state.result._id}`, formData);
+  //     } else {
+  //       await addResult(formData);
+  //     }
+  //     navigate("/cart");
+  //   } catch (error) {
+  //     setError(error.response?.data?.message || 'An error occurred while submitting the form');
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isDuplicate) {
@@ -141,14 +164,33 @@ const AddResultForm = () => {
     setError(null);
 
     try {
+      // Configure axios defaults
+      axios.defaults.headers.common['Content-Type'] = 'application/json';
+      
       if (state?.result) {
-        await axios.put(`${API_URL}/${state.result._id}`, formData);
+        const response = await axios.put(`${API_URL}/${state.result._id}`, formData);
+        if (response.data) {
+          navigate("/cart");
+        }
       } else {
         await addResult(formData);
+        navigate("/cart");
       }
-      navigate("/cart");
     } catch (error) {
-      setError(error.response?.data?.message || 'An error occurred while submitting the form');
+      console.error('Submission error:', error);
+      setError(
+        error.response?.data?.message || 
+        'An error occurred while submitting the form. Please try again.'
+      );
+      
+      // Log detailed error information
+      if (error.response) {
+        console.error('Error response:', {
+          status: error.response.status,
+          headers: error.response.headers,
+          data: error.response.data
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }

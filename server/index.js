@@ -18,7 +18,14 @@ const limiter = rateLimit({
 });
 
 // Middleware
-app.use(cors());
+app.use(cors({
+    origin: ['https://funoonfiesta.vercel.app', 'http://localhost:5173'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+    optionsSuccessStatus: 200
+}));
+
 app.use(compression());
 app.use(helmet());
 app.use(morgan('dev'));
