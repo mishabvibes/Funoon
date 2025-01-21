@@ -21,7 +21,7 @@ const TEAM_COLORS = {
     gradient: 'from-[#6b3f24] to-[#4e2e1a]',
     light: '#efebe9'
   },
-  'IJAZIYYA': {
+  'HIJAZIYYA': {
     primary: '#5a199b',
     gradient: 'from-[#5a199b] to-[#461477]',
     light: '#f3e5f5'

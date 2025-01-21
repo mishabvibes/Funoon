@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 const ScoreBoard = () => {
   const { results, uniquePrograms, groupPrograms, singlePrograms } = useResults();
-  const teamNames = ["ALEXANDRIA", "SHATIBIYA", "QADISIYYA", "SHAMIYA", "IJAZIYYA", "KAZIMIYYA"];
+  const teamNames = ["ALEXANDRIA", "SHATIBIYA", "QADISIYYA", "SHAMIYA", "HIJAZIYYA", "KAZIMIYYA"];
   const [activeTeam, setActiveTeam] = useState(null);
   const [expandedSection, setExpandedSection] = useState(null);
   const [selectedTeam, setSelectedTeam] = useState(null);

@@ -13,6 +13,13 @@ import img2 from '../../assets/img/poster/3.jpeg';
 const STORAGE_KEY = 'programWinners';
 const PROGRAM_DATA_KEY = 'programData';
 
+// Define prize points
+const prizePoints = {
+  'FIRST': 10,
+  'SECOND': 8,
+  'THIRD': 6
+};
+
 const PosterPage = () => {
   const { programName } = useParams();
   const { results } = useResults();
@@ -85,14 +92,22 @@ const PosterPage = () => {
   // Update data when results change and cache it
   useEffect(() => {
     if (results.length > 0 && programName) {
-      const programInfo = results.find(
+      const programResults = results.filter(
         result => result.programName.toUpperCase() === programName.toUpperCase()
       );
 
-      const formattedResults = results
-        .filter(result => result.programName.toUpperCase() === programName.toUpperCase())
-        .sort((a, b) => b.points - a.points)
-        .slice(0, 3)
+      const programInfo = programResults[0];
+
+      // Sort by prize order: FIRST, SECOND, THIRD
+      const sortedResults = programResults.sort((a, b) => {
+        const prizeOrder = { 'FIRST': 1, 'SECOND': 2, 'THIRD': 3 };
+        return prizeOrder[a.prize] - prizeOrder[b.prize];
+      });
+
+      // Map only prize winners to the format needed for the poster
+      const formattedResults = sortedResults
+        .filter(result => result.prize) // Only include results with prizes
+        .slice(0, 3) // Take top 3
         .map((winner, index) => ({
           fields: {
             Place: (index + 1).toString(),
@@ -101,6 +116,7 @@ const PosterPage = () => {
           }
         }));
 
+      // Fill in any missing places up to 3
       while (formattedResults.length < 3) {
         formattedResults.push({
           fields: {
@@ -177,11 +193,7 @@ const PosterPage = () => {
                   }}
                   className="flex items-center gap-4 bg-white/40 dark:bg-white/10 backdrop-blur-sm rounded-xl p-4 w-full md:w-auto"
                 >
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                    index === 0 ? 'shadow-lg' : 
-                    index === 1 ? 'shadow-lg' : 
-                    'shadow-lg'}`}
-                  >
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
                     <span className="text-4xl">{getMedalEmoji(index)}</span>
                   </div>
                   <div>

@@ -5,7 +5,7 @@ import 'swiper/css/pagination';
 import { Pagination, Autoplay } from 'swiper/modules';
 import Testimonial from '../Testimonial/Testimonial';
 import ALEXANDRIA from "../../assets/img/Leaders/ALEXANDRIA.webp";
-import IJAZIYYA from "../../assets/img/Leaders/IJAZIYYA.webp";
+import HIJAZIYYA from "../../assets/img/Leaders/IJAZIYYA.webp";
 import KAZIMIYYA from "../../assets/img/Leaders/KAZIMIYYA.webp";
 import MADIYA from "../../assets/img/Leaders/MADIYA.webp";
 import SHAMIYA from "../../assets/img/Leaders/SHAMIYA.webp";
@@ -24,8 +24,8 @@ const TeamLeader = () => {
     { 
       id: 2, 
       name: "Fasil Ashkari & Safwan",
-      role: "IJAZIYYA Group Leaders",
-      image: IJAZIYYA,
+      role: "HIJAZIYYA Group Leaders",
+      image: HIJAZIYYA,
     },
     { 
       id: 3, 

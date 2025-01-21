@@ -1,35 +1,67 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Award, User, Trophy, Star, ListChecks, Grid, Clipboard, AlertCircle } from 'lucide-react';
+import { Award, User, Trophy, Star, ListChecks, Grid, Clipboard, AlertCircle, Info } from 'lucide-react';
 import { useResults } from '../../../context/DataContext';
 import { Alert, AlertDescription } from '../../Components/ui/alert';
 import axios from 'axios';
 
 const DEBOUNCE_DELAY = 300;
-
 const API_URL = import.meta.env.VITE_API_URL.replace(/\/$/, '');
 
-// Moved outside component to prevent recreating on each render
-const pointsMatrix = {
-  'GROUP': {
-    'FIRST': { 'A': 25, 'B': 23, 'C': 21 },
-    'SECOND': { 'A': 22, 'B': 20, 'C': 18 },
-    'THIRD': { 'A': 20, 'B': 18, 'C': 16 }
-  },
+// Points calculation matrices
+const prizePointsMatrix = {
   'SINGLE': {
-    'FIRST': { 'A': 10, 'B': 8, 'C': 6 },
-    'SECOND': { 'A': 8, 'B': 6, 'C': 4 },
-    'THIRD': { 'A': 6, 'B': 4, 'C': 2 }
+    'FIRST': 5,
+    'SECOND': 3,
+    'THIRD': 1
+  },
+  'GROUP': {
+    'FIRST': 20,
+    'SECOND': 17,
+    'THIRD': 15
   },
   'GENERAL': {
-    'FIRST': { 'A': 15, 'B': 13, 'C': 11 },
-    'SECOND': { 'A': 13, 'B': 11, 'C': 9 },
-    'THIRD': { 'A': 11, 'B': 9, 'C': 7 }
+    'FIRST': 10,
+    'SECOND': 8,
+    'THIRD': 6
   }
 };
 
-const calculatePoints = (category, prize, grade) => 
-  category && prize && grade ? pointsMatrix[category]?.[prize]?.[grade] || '' : '';
+const gradePoints = {
+  'A': 5,
+  'B': 3,
+  'C': 1
+};
+
+const calculatePoints = (category, prize, grade) => {
+  let total = 0;
+  
+  // Calculate prize points if prize is provided
+  if (prize && category) {
+    total += prizePointsMatrix[category]?.[prize] || 0;
+  }
+  
+  // Add grade points if grade is provided
+  if (grade) {
+    total += gradePoints[grade] || 0;
+  }
+  
+  return total || '';
+};
+
+const getPointsBreakdown = (category, prize, grade) => {
+  const parts = [];
+  
+  if (prize && category) {
+    parts.push(`Prize (${prize}): ${prizePointsMatrix[category]?.[prize] || 0}`);
+  }
+  
+  if (grade) {
+    parts.push(`Grade (${grade}): ${gradePoints[grade] || 0}`);
+  }
+  
+  return parts.join(' + ');
+};
 
 const initialFormState = {
   studentName: '',
@@ -49,6 +81,8 @@ const AddResultForm = () => {
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDuplicate, setIsDuplicate] = useState(false);
+  const [pointsBreakdown, setPointsBreakdown] = useState('');
+  const [showPointsBreakdown, setShowPointsBreakdown] = useState(false);
   const navigate = useNavigate();
 
   // Memoized form fields configuration
@@ -56,27 +90,32 @@ const AddResultForm = () => {
     { 
       name: 'teamName', 
       icon: <Grid className="w-5 h-5 text-gray-400" />, 
-      options: ['ALEXANDRIA', 'SHATIBIYA', 'QADISIYYA', 'SHAMIYA', 'IJAZIYYA', 'KAZIMIYYA'] 
+      options: ['ALEXANDRIA', 'SHATIBIYA', 'QADISIYYA', 'SHAMIYA', 'HIJAZIYYA', 'KAZIMIYYA'],
+      required: true
     },
     { 
       name: 'category', 
       icon: <ListChecks className="w-5 h-5 text-gray-400" />, 
-      options: ['SINGLE', 'GROUP', 'GENERAL'] 
+      options: ['SINGLE', 'GROUP', 'GENERAL'],
+      required: true
     },
     { 
       name: 'stage', 
       icon: <Star className="w-5 h-5 text-gray-400" />, 
-      options: ['STAGE', 'NON-STAGE'] 
+      options: ['STAGE', 'NON-STAGE'],
+      required: true
     },
     { 
       name: 'prize', 
       icon: <Trophy className="w-5 h-5 text-gray-400" />, 
-      options: ['FIRST', 'SECOND', 'THIRD'] 
+      options: ['FIRST', 'SECOND', 'THIRD'],
+      required: false
     },
     { 
       name: 'grade', 
       icon: <Star className="w-5 h-5 text-gray-400" />, 
-      options: ['A', 'B', 'C'] 
+      options: ['A', 'B', 'C'],
+      required: false
     }
   ], []);
 
@@ -95,6 +134,14 @@ const AddResultForm = () => {
       formData.grade
     ).toString();
     
+    const breakdown = getPointsBreakdown(
+      formData.category,
+      formData.prize,
+      formData.grade
+    );
+    
+    setPointsBreakdown(breakdown);
+    
     if (calculatedPoints !== formData.points) {
       setFormData(prev => ({
         ...prev,
@@ -103,11 +150,20 @@ const AddResultForm = () => {
     }
   }, [formData.category, formData.prize, formData.grade]);
 
+  // Validation for prize or grade requirement
+  const validatePrizeOrGrade = (data) => {
+    if (!data.prize && !data.grade) {
+      setError('Either Prize or Grade must be provided');
+      return false;
+    }
+    return true;
+  };
+
   // Duplicate check with debounce
   const checkDuplicate = useCallback(
     (data) => {
       const isDuplicateEntry = results.some(result => 
-        result._id !== state?.result?._id && // Exclude current result when editing
+        result._id !== state?.result?._id &&
         result.studentName.toLowerCase() === data.studentName.toLowerCase() &&
         result.programName.toLowerCase() === data.programName.toLowerCase() &&
         result.category === data.category
@@ -132,6 +188,11 @@ const AddResultForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!validatePrizeOrGrade(formData)) {
+      return;
+    }
+    
     if (isDuplicate) {
       setError('This result appears to be a duplicate. Please verify the details.');
       return;
@@ -141,7 +202,6 @@ const AddResultForm = () => {
     setError(null);
   
     try {
-      // Only trim leading and trailing spaces, preserve spaces between words
       const cleanedFormData = {
         ...formData,
         studentName: formData.studentName.trim(),
@@ -219,7 +279,7 @@ const AddResultForm = () => {
                 name={field.name}
                 value={formData[field.name]}
                 onChange={handleChange}
-                required
+                required={field.required}
                 className={`w-full pl-10 pr-4 py-3 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none ${
                   formData[field.name] ? 'text-black' : 'text-gray-400 dark:text-gray-600'
                 }`}
@@ -232,19 +292,33 @@ const AddResultForm = () => {
             </div>
           ))}
 
-          {/* Points (Read-only) */}
+          {/* Points (Read-only) with hover info */}
           <div className="relative">
             <Star className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
-            <input
-              type="text"
-              name="points"
-              placeholder="Points"
-              value={formData.points}
-              readOnly
-              className={`w-full pl-10 pr-4 py-3 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none ${
+            <div className="relative group">
+              <input
+                type="text"
+                name="points"
+                placeholder="Points"
+                value={formData.points}
+                readOnly
+                className={`w-full pl-10 pr-10 py-3 border rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none ${
                   formData.points ? 'text-black' : 'text-gray-400 dark:text-gray-600'
                 }`}
-            />
+              />
+              <button
+                type="button"
+                onClick={() => setShowPointsBreakdown(!showPointsBreakdown)}
+                className="absolute right-3 top-3"
+              >
+                <Info className="w-5 h-5 text-gray-400" />
+              </button>
+              {showPointsBreakdown && pointsBreakdown && (
+                <div className="absolute z-10 w-full p-2 mt-1 text-sm bg-white dark:bg-gray-800 border rounded-md shadow-lg">
+                  {pointsBreakdown}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Submit Button */}

@@ -6,9 +6,9 @@ const ResultSchema = new mongoose.Schema({
   programName: { type: String, required: true },
   teamName: { type: String, required: true },
   category: { type: String ,required:true},
-  prize: { type: String, required: true },
-  grade: { type: String },
   stage: { type: String, required: true },
+  prize: { type: String },
+  grade: { type: String },
   points: { type: Number, required: true },
 });
 
