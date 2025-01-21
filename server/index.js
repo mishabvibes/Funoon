@@ -18,12 +18,7 @@ const limiter = rateLimit({
 });
 
 // Middleware
-app.use(cors({
-    origin: 'https://funoon-5rf3.vercel.app',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    credentials: true
-  }));
-
+app.use(cors());
 app.use(compression());
 app.use(helmet());
 app.use(morgan('dev'));
