@@ -136,15 +136,22 @@ const AddResultForm = () => {
       setError('This result appears to be a duplicate. Please verify the details.');
       return;
     }
-
+  
     setIsSubmitting(true);
     setError(null);
-
+  
     try {
+      // Only trim leading and trailing spaces, preserve spaces between words
+      const cleanedFormData = {
+        ...formData,
+        studentName: formData.studentName.trim(),
+        programName: formData.programName.trim()
+      };
+  
       if (state?.result) {
-        await axios.put(`${API_URL}/${state.result._id}`, formData);
+        await axios.put(`${API_URL}/${state.result._id}`, cleanedFormData);
       } else {
-        await addResult(formData);
+        await addResult(cleanedFormData);
       }
       navigate("/cart");
     } catch (error) {
