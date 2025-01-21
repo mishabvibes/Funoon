@@ -1,4 +1,3 @@
-// server/routes/result.js
 const express = require('express');
 const router = express.Router();
 const Result = require('../models/resultSchema');
@@ -17,7 +16,6 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const result = await Result.create(req.body);
-        req.io.emit('newResult', result);
         res.status(201).json({
             message: 'Data created successfully.',
             data: result,
@@ -30,32 +28,26 @@ router.post('/', async (req, res) => {
     }
 });
 
-// Update an existing result
+// Update an existing result by ID
 router.put('/:id', async (req, res) => {
     try {
-        const updatedResult = await Result.findByIdAndUpdate(
-            req.params.id, 
-            req.body, 
-            { new: true, runValidators: true }
-        );
+        const updatedResult = await Result.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
         if (!updatedResult) {
             return res.status(404).json({ message: 'Result not found' });
         }
-        req.io.emit('updateResult', updatedResult);
         res.status(200).json(updatedResult);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 });
 
-// Delete a result
+// Delete a result by ID
 router.delete('/:id', async (req, res) => {
     try {
         const deletedResult = await Result.findByIdAndDelete(req.params.id);
         if (!deletedResult) {
             return res.status(404).json({ message: 'Result not found' });
         }
-        req.io.emit('deleteResult', req.params.id);
         res.status(200).json({ message: 'Result deleted successfully' });
     } catch (error) {
         res.status(500).json({ error: error.message });
