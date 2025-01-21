@@ -7,8 +7,7 @@ import axios from 'axios';
 
 const DEBOUNCE_DELAY = 300;
 
-// const API_URL = import.meta.env.VITE_API_URL.replace(/\/$/, '');
-const API_URL = 'https://funoon-chi.vercel.app/'
+const API_URL = import.meta.env.VITE_API_URL.replace(/\/$/, '');
 
 // Moved outside component to prevent recreating on each render
 const pointsMatrix = {
