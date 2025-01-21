@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 
 const ResultsContext = createContext();
-const API = import.meta.env.VITE_API_URL;
+const API = import.meta.env.VITE_API_URL.replace(/\/$/, '');
 
 export const ResultsProvider = ({ children }) => {
     const [results, setResults] = useState([]);
