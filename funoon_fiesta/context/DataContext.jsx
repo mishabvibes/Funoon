@@ -1,8 +1,16 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useCallback } from "react";
 import axios from "axios";
 
 const ResultsContext = createContext();
 const API = import.meta.env.VITE_API_URL.replace(/\/$/, '');
+
+// Storage keys for different data types
+const STORAGE_KEYS = {
+  RESULTS: 'results',
+  SCOREBOARD: 'scoreboardResults',
+  PROGRAM: 'programResults',
+  TEAM: 'teamResults'
+};
 
 export const ResultsProvider = ({ children }) => {
     const [results, setResults] = useState([]);
@@ -14,7 +22,58 @@ export const ResultsProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const fetchResults = async () => {
+    // Function to update localStorage across all components
+    const updateLocalStorage = useCallback((data) => {
+        Object.values(STORAGE_KEYS).forEach(key => {
+            localStorage.setItem(key, JSON.stringify(data));
+        });
+    }, []);
+
+    // Process data and update all derived states
+    const processData = useCallback((data) => {
+        // Update teams
+        const teams = [...new Set(data.map(result => 
+            result.teamName ? result.teamName.toUpperCase() : ""))].filter(Boolean);
+        setUniqueTeams(teams);
+
+        // Update programs
+        const allPrograms = [...new Set(data.map(result => 
+            result.programName ? result.programName.toUpperCase() : ""))].filter(Boolean);
+
+        const groupProgs = allPrograms.filter(program =>
+            data.some(result =>
+                result.programName?.toUpperCase() === program &&
+                result.category === "GROUP"
+            )
+        );
+
+        const singleProgs = allPrograms.filter(program =>
+            data.some(result =>
+                result.programName?.toUpperCase() === program &&
+                result.category === "SINGLE"
+            )
+        );
+
+        const generalProgs = allPrograms.filter(program =>
+            data.some(result =>
+                result.programName?.toUpperCase() === program &&
+                result.category === "GENERAL"
+            )
+        );
+
+        setGroupPrograms(groupProgs);
+        setSinglePrograms(singleProgs);
+        setUniquePrograms(generalProgs);
+
+        // Update top participants
+        const topParticipants = data
+            .filter(result => result.category === "SINGLE")
+            .sort((a, b) => Number(b.points) - Number(a.points))
+            .slice(0, 3);
+        setTopSingleParticipants(topParticipants);
+    }, []);
+
+    const fetchResults = useCallback(async () => {
         try {
             setLoading(true);
             const response = await axios.get(API);
@@ -28,49 +87,8 @@ export const ResultsProvider = ({ children }) => {
             }
 
             setResults(data);
-
-            // Process unique teams
-            const teams = [...new Set(data.map(result => 
-                result.teamName ? result.teamName.toUpperCase() : ""))].filter(Boolean);
-            setUniqueTeams(teams);
-
-            // Get all unique program names
-            const allPrograms = [...new Set(data.map(result => 
-                result.programName ? result.programName.toUpperCase() : ""))].filter(Boolean);
-
-            // Process programs by category
-            const groupProgs = allPrograms.filter(program =>
-                data.some(result =>
-                    result.programName?.toUpperCase() === program &&
-                    result.category === "GROUP"
-                )
-            );
-
-            const singleProgs = allPrograms.filter(program =>
-                data.some(result =>
-                    result.programName?.toUpperCase() === program &&
-                    result.category === "SINGLE"
-                )
-            );
-
-            const generalProgs = allPrograms.filter(program =>
-                data.some(result =>
-                    result.programName?.toUpperCase() === program &&
-                    result.category === "GENERAL"
-                )
-            );
-
-            setGroupPrograms(groupProgs);
-            setSinglePrograms(singleProgs);
-            setUniquePrograms(generalProgs);
-
-            // Process top single participants
-            const topParticipants = data
-                .filter(result => result.category === "SINGLE")
-                .sort((a, b) => Number(b.points) - Number(a.points))
-                .slice(0, 3);
-            setTopSingleParticipants(topParticipants);
-
+            processData(data);
+            updateLocalStorage(data);
             setError(null);
         } catch (error) {
             console.error("Fetch error:", error);
@@ -78,16 +96,20 @@ export const ResultsProvider = ({ children }) => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [processData, updateLocalStorage]);
 
-    useEffect(() => {
-        fetchResults();
-    }, []);
-
-    const deleteResult = async (id) => {
+    const deleteResult = useCallback(async (id) => {
         try {
             setLoading(true);
             await axios.delete(`${API}/${id}`);
+            
+            // Optimistically update local state
+            const updatedResults = results.filter(result => result._id !== id);
+            setResults(updatedResults);
+            processData(updatedResults);
+            updateLocalStorage(updatedResults);
+            
+            // Fetch fresh data from server
             await fetchResults();
         } catch (error) {
             console.error("Delete error:", error);
@@ -96,9 +118,9 @@ export const ResultsProvider = ({ children }) => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [results, fetchResults, processData, updateLocalStorage]);
 
-    const editResult = async (id, updatedData) => {
+    const editResult = useCallback(async (id, updatedData) => {
         try {
             setLoading(true);
             await axios.put(`${API}/${id}`, updatedData);
@@ -110,9 +132,9 @@ export const ResultsProvider = ({ children }) => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [fetchResults]);
 
-    const addResult = async (newData) => {
+    const addResult = useCallback(async (newData) => {
         try {
             setLoading(true);
             await axios.post(API, newData);
@@ -124,7 +146,11 @@ export const ResultsProvider = ({ children }) => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [fetchResults]);
+
+    useEffect(() => {
+        fetchResults();
+    }, [fetchResults]);
 
     return (
         <ResultsContext.Provider
