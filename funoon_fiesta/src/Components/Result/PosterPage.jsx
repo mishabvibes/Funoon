@@ -4,11 +4,11 @@ import { useParams } from 'react-router-dom';
 import EnhancedPoster from './WinnerPoster';
 import { useResults } from '../../../context/DataContext';
 import { motion } from 'framer-motion';
-import onStage from '../../assets/img/poster.jpeg';
-import offStage from '../../assets/img/poster.jpeg';
-import img from '../../assets/img/poster.jpeg';
-import img1 from '../../assets/img/poster1.jpg';
-import img2 from '../../assets/img/poster2.jpg';
+import onStage from '../../assets/img/poster/1.jpeg';
+import offStage from '../../assets/img/poster/2.jpeg';
+import img from '../../assets/img/poster/1.jpeg';
+import img1 from '../../assets/img/poster/2.jpeg';
+import img2 from '../../assets/img/poster/3.jpeg';
 
 const STORAGE_KEY = 'programWinners';
 const PROGRAM_DATA_KEY = 'programData';

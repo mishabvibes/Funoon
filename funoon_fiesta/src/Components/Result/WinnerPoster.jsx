@@ -116,7 +116,7 @@ const WinnerPoster = ({
                   key={`${place}-${index}`}
                   className="flex items-center gap-2 sm:gap-3 lg:gap-4"
                 >
-                  <div className="p-1.5 sm:p-2 rounded-md sm:rounded-xl bg-white/20">
+                  <div className="p-1.5 sm:p-2 rounded-md sm:rounded-xl bg-secondery/30">
                     <Medal 
                       className="w-3 h-3 sm:w-6 sm:h-6"
                       style={{ color: medalColors[parseInt(place)] }}
@@ -126,24 +126,24 @@ const WinnerPoster = ({
                     <h3 className="text-xs sm:text-sm lg:text-base font-bold text-white truncate">
                       {record.fields.Name}
                     </h3>
-                    <p className="text-xs text-yellow-400 truncate">
+                    <p className="text-xs text-red-400 truncate">
                       {record.fields.Team}
                     </p>
                   </div>
-                  <div className="text-sm sm:text-base lg:text-lg font-bold text-white/50">
+                  {/* <div className="text-sm sm:text-base lg:text-lg font-bold text-white/50">
                     #{place}
-                  </div>
+                  </div> */}
                 </div>
               ))
             ))}
           </div>
 
           {/* Footer */}
-          <div className="mt-4 text-center">
+          {/* <div className="mt-4 text-center">
             <p className="text-xs text-white/60">
               Funoon Fiesta • 2024 - 2025
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
 
