@@ -16,7 +16,7 @@ const TEAM_COLORS = {
     gradient: 'from-[#c9194a] to-[#a1143b]',
     light: '#fce4ec'
   },
-  'MADIYA': {
+  'QADISIYYA': {
     primary: '#6b3f24',
     gradient: 'from-[#6b3f24] to-[#4e2e1a]',
     light: '#efebe9'

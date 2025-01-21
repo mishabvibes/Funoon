@@ -7,7 +7,7 @@ import Testimonial from '../Testimonial/Testimonial';
 import ALEXANDRIA from "../../assets/img/Leaders/ALEXANDRIA.webp";
 import HIJAZIYYA from "../../assets/img/Leaders/IJAZIYYA.webp";
 import KAZIMIYYA from "../../assets/img/Leaders/KAZIMIYYA.webp";
-import MADIYA from "../../assets/img/Leaders/MADIYA.webp";
+import QADISIYYA from "../../assets/img/Leaders/QADISIYYA.webp";
 import SHAMIYA from "../../assets/img/Leaders/SHAMIYA.webp";
 import SHATIBIYA from "../../assets/img/Leaders/SHATIBIYA.webp";
 import { motion } from 'framer-motion';
@@ -35,13 +35,13 @@ const TeamLeader = () => {
     },
     { 
       id: 4, 
-      name: "Safwan & Anvar ali", 
+      name: "Anvar ali & Safwan", 
       role: "QADISIYYA Group Leader",
-      image: MADIYA,
+      image: QADISIYYA,
     },
     { 
       id: 5, 
-      name: "Qasim & Sahal", 
+      name: "Sahal & Qasim", 
       role: "SHAMIYYA Group Leaders",
       image: SHAMIYA,
     },
