@@ -36,7 +36,7 @@ const TeamLeader = () => {
     { 
       id: 4, 
       name: "Safwan & Anvar ali", 
-      role: "MADIYYA Group Leader",
+      role: "QADISIYYA Group Leader",
       image: MADIYA,
     },
     { 
