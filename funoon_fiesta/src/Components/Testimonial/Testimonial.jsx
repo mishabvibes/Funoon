@@ -11,13 +11,13 @@ const Testimonial = () => {
             img: aliKuttyUsthad,
             content_text: "Funun Fiesta is shaping history and engaging with the present. This platform beautifully conveys the messages of Islam to society.",
             testimonial_name: 'Shikhul Jamia K.Alikutty Musliyar',
-            text_block: 'Principal of collage',
+            text_block: 'Principal of college',
         },
         {
             img: kottumalaUsthad,
             content_text: "Funun Fiesta is a unique platform connecting art with purpose. It beautifully shares the inspiring messages of Islam with society.",
             testimonial_name: 'Moideen Kutty Musliyar Kottumala',
-            text_block: 'Proffeser of collage',
+            text_block: 'Proffeser of college',
         },
         {
             img: asgaraliUsthad,
