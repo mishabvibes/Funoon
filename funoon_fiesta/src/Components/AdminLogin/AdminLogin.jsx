@@ -4,6 +4,8 @@ import { User, LockKeyhole, AlertCircle, EyeOff, Eye } from 'lucide-react';
 
 // Authentication Context (unchanged)
 const AuthContext = createContext(null);
+const UserName = import.meta.env.VITE_UserName
+const Key = import.meta.env.VITE_PassKey
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
@@ -12,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   });
 
   const login = (username, password) => {
-    if (username === 'admin' && password === '123') {
+    if (username === UserName && password === Key) {
       const userData = { username };
       localStorage.setItem('user', JSON.stringify(userData));
       setUser(userData);

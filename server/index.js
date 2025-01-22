@@ -1,6 +1,7 @@
 // server/index.js
 const express = require('express');
 const app = express();
+const Pusher = require('pusher');
 const cors = require('cors');
 const compression = require('compression');
 const helmet = require('helmet');
@@ -11,19 +12,28 @@ const { errorHandle } = require('./middlewares/errorHandle');
 const connectDb = require('./config/db');
 require('dotenv').config();
 
+// Initialize Pusher
+const pusher = new Pusher({
+  appId: process.env.PUSHER_APP_ID,
+  key: process.env.PUSHER_KEY,
+  secret: process.env.PUSHER_SECRET,
+  cluster: process.env.PUSHER_CLUSTER,
+  useTLS: true
+});
+
 // Rate limiting
 const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 100
+  windowMs: 15 * 60 * 1000,
+  max: 100
 });
 
 // Middleware
 app.use(cors({
-    origin: ['https://funoonfiesta.vercel.app', 'http://localhost:5173'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-    optionsSuccessStatus: 200
+  origin: ['https://funoonfiesta.vercel.app', 'http://localhost:5173'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  optionsSuccessStatus: 200
 }));
 
 app.use(compression());
@@ -31,36 +41,33 @@ app.use(helmet());
 app.use(morgan('dev'));
 app.use(limiter);
 app.use(express.json());
-app.use(express.static('public', {
-    maxAge: '1d',
-    etag: true,
-    lastModified: true
-}));
+
+// Add pusher to req object
+app.use((req, res, next) => {
+  req.pusher = pusher;
+  next();
+});
 
 // Database connection
 connectDb();
 
 // Routes
-app.use('/', resultRoute);
+app.use('/api', resultRoute);
 
 // Handle 404
 app.all('*', (req, res) => {
-    res.status(404).json("This page does not exist");
+  res.status(404).json("This page does not exist");
 });
 
 // Error handling
 app.use(errorHandle);
 
-// Graceful shutdown
-process.on('SIGTERM', () => {
-    console.info('SIGTERM signal received.');
-    server.close(() => {
-        console.log('Server closed.');
-        process.exit(0);
-    });
-});
-
-const PORT = process.env.PORT || 3006;
-const server = app.listen(PORT, () => {
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 3006;
+  app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
-});
+  });
+}
+
+module.exports = app;
