@@ -57,7 +57,7 @@ We welcome contributions from the community! If you’d like to contribute:
 ## 📧 Contact Us
 For inquiries or feedback, feel free to reach out:
 
-**.** 📩 Email: nusafizabad@gmail.com
+**.** 📩 Email: nusafaizabad@gmail.com
 **.** 🌐 Website: Funoon Fiesta
 
 ### 🏆 Acknowledgments
