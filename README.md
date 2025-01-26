@@ -48,6 +48,8 @@ This repository is optimized for search engines to ensure **Funoon Fiesta**appea
 For inquiries or feedback, feel free to reach out:
 
 **.** 📩 Email: nusafaizabad@gmail.com
+
+
 **.** 🌐 Website: https://funoonfiesta.vercel.app/
 
 ### 🏆 Acknowledgments
