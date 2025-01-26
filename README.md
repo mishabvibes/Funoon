@@ -42,7 +42,7 @@ Express.js**
 PUSHER**
 
 ## 🌎 Live Demo
-**🔗 Funoonfiesta.com**
+**🔗 Funoon Fiesta Live App**
 
 ## 🌟 SEO Optimized
 This repository is optimized for search engines to ensure **Funoon Fiesta**appears at the top of Google search results.
