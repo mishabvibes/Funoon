@@ -41,24 +41,14 @@ Express.js**
 **PWA
 PUSHER**
 
-## 🌎 Live Demo
-**🔗 Funoon Fiesta Live App**
-
 ## 🌟 SEO Optimized
 This repository is optimized for search engines to ensure **Funoon Fiesta**appears at the top of Google search results.
-
-## 🤝 Contributing
-We welcome contributions from the community! If you’d like to contribute:
-
-**.** Fork the repository
-**.** Make your changes
-**.** Create a pull request
 
 ## 📧 Contact Us
 For inquiries or feedback, feel free to reach out:
 
 **.** 📩 Email: nusafaizabad@gmail.com
-**.** 🌐 Website: Funoon Fiesta
+**.** 🌐 Website: https://funoonfiesta.vercel.app/
 
 ### 🏆 Acknowledgments
 Special thanks to our team, faculty, and participants who made this project a reality.
