@@ -15,6 +15,7 @@ const PosterPage = lazy(() => import("./Components/Result/PosterPage"));
 const AddResult = lazy(() => import("./Pages/AddResult"));
 const CartPage = lazy(() => import("./Pages/CartPage"));
 const ScoreTable = lazy(() => import("./Pages/ScoreTable"));
+const TopParticipants = lazy(() => import("./Pages/TopPartPage"));
 
 // const IS_COMINGSOON = true;
 
@@ -34,6 +35,7 @@ function App() {
           <Route path='/result' element={<Result />} />
           <Route path="/poster/:programName" element={<PosterPage />} />
           <Route path='/scoretable' element={<ScoreTable />} />
+          <Route path='/toppartficipants' element={<TopParticipants />} />
           <Route element={<ProtectedRoute />}>
             <Route path='/addresult' element={<AddResult />} />
             <Route path='/cart' element={<CartPage />} />

@@ -75,7 +75,7 @@ const initialFormState = {
 };
 
 const AddResultForm = () => {
-  const { addResult, results } = useResults();
+  const { addResult, results, editResult } = useResults();
   const { state } = useLocation();
   const [formData, setFormData] = useState(initialFormState);
   const [error, setError] = useState(null);
@@ -209,7 +209,7 @@ const AddResultForm = () => {
       };
   
       if (state?.result) {
-        await axios.put(`${API_URL}/${state.result._id}`, cleanedFormData);
+        await editResult(state.result._id, cleanedFormData); // Use editResult instead of direct axios call
       } else {
         await addResult(cleanedFormData);
       }

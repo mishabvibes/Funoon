@@ -41,7 +41,7 @@ const TEAM_COLORS = {
 // TeamCard Component remains the same
 const TeamCard = ({ team, index, totalPoints }) => {
   const getMedalColor = (index) => {
-    switch(index) {
+    switch (index) {
       case 0: return '#FFD700';
       case 1: return '#C0C0C0';
       case 2: return '#CD7F32';
@@ -60,11 +60,11 @@ const TeamCard = ({ team, index, totalPoints }) => {
         <div className="bg-white dark:bg-[#2D2D2D] rounded-xl p-4">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3">
-              <div 
+              <div
                 className="w-10 h-10 flex items-center justify-center rounded-lg"
                 style={{ backgroundColor: team.colors.light }}
               >
-                <span 
+                <span
                   className="text-xl font-bold"
                   style={{ color: team.colors.primary }}
                 >
@@ -77,9 +77,9 @@ const TeamCard = ({ team, index, totalPoints }) => {
                     {team.teamName}
                   </h3>
                   {index < 3 && (
-                    <Medal 
-                      className="w-5 h-5" 
-                      style={{ color: getMedalColor(index) }} 
+                    <Medal
+                      className="w-5 h-5"
+                      style={{ color: getMedalColor(index) }}
                     />
                   )}
                 </div>
@@ -145,7 +145,7 @@ const DistributionChart = ({ teams }) => {
             <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
               {team.teamName}: {team.totalPoints.toLocaleString()} pts
             </div>
-            
+
             <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
               <span className="text-xs font-medium text-gray-600 whitespace-nowrap">
                 {team.totalPoints.toLocaleString()}
@@ -261,12 +261,20 @@ const TeamOverview = () => {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="flex justify-center items-center mt-6 sm:mt-8"
         >
-          <button 
-            onClick={() => navigate('/scoretable')} 
-            className="bg-secondery hover:bg-red-700 transition-colors py-2 sm:py-3 px-6 sm:px-8 md:px-12 lg:px-16 rounded-full text-base sm:text-lg md:text-xl text-white shadow-lg hover:shadow-xl transform-gpu transition-all duration-300 hover:scale-105"
-          >
-            More Results
-          </button>
+          <div className='flex justify-between gap-4'>
+            <button
+              onClick={() => navigate('/scoretable')}
+              className="bg-secondery hover:bg-red-700 transition-colors py-2 sm:py-3 px-6 sm:px-8 md:px-12 lg:px-16 rounded-l-full text-base sm:text-lg md:text-xl text-white shadow-lg hover:shadow-xl transform-gpu transition-all duration-300 hover:scale-105"
+            >
+              More Results
+            </button>
+            <button
+              onClick={() => navigate('/toppartficipants')}
+              className="bg-secondery hover:bg-red-700 transition-colors py-2 sm:py-3 px-6 sm:px-8 md:px-12 lg:px-16 rounded-r-full text-base sm:text-lg md:text-xl text-white shadow-lg hover:shadow-xl transform-gpu transition-all duration-300 hover:scale-105"
+            >
+              Top Participants
+            </button>
+          </div>
         </motion.div>
       </div>
     </section>

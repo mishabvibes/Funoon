@@ -34,6 +34,7 @@ router.post('/', async (req, res) => {
 });
 
 // Update an existing result
+// In server/routes/result.js, the route should already include '/api' from the app.js setup
 router.put('/:id', async (req, res) => {
     try {
         const updatedResult = await Result.findByIdAndUpdate(

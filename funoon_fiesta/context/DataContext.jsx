@@ -1,4 +1,3 @@
-// client/src/contexts/ResultsContext.jsx
 import { createContext, useContext, useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import Pusher from 'pusher-js';
@@ -21,6 +20,40 @@ export const ResultsProvider = ({ children }) => {
   const [topSingleParticipants, setTopSingleParticipants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isInitialFetch, setIsInitialFetch] = useState(true);
+
+  // Calculate total points for a participant (new method)
+  const calculateParticipantPoints = useCallback((data, studentName) => {
+    return data
+      .filter(result => result.studentName === studentName && result.category === "SINGLE")
+      .reduce((sum, result) => sum + Number(result.points || 0), 0);
+  }, []);
+
+  // Get unique participants with their total points (new method)
+  const getTopParticipants = useCallback((data) => {
+    // Get unique participant names from SINGLE category
+    const uniqueParticipants = [...new Set(
+      data
+        .filter(result => result.category === "SINGLE")
+        .map(result => result.studentName)
+    )];
+
+    // Create participant objects with total points
+    const participantsWithPoints = uniqueParticipants.map(studentName => {
+      const participantResults = data.find(result => result.studentName === studentName);
+      return {
+        _id: participantResults._id, // Keep the _id from any result for this participant
+        studentName,
+        teamName: participantResults.teamName,
+        totalPoints: calculateParticipantPoints(data, studentName)
+      };
+    });
+
+    // Sort by total points and get top 3
+    return participantsWithPoints
+      .sort((a, b) => b.totalPoints - a.totalPoints)
+      .slice(0, 3);
+  }, [calculateParticipantPoints]);
 
   // Process data and update all derived states
   const processData = useCallback((data) => {
@@ -60,13 +93,10 @@ export const ResultsProvider = ({ children }) => {
     setSinglePrograms(singleProgs);
     setUniquePrograms(generalProgs);
 
-    // Top participants processing
-    const topParticipants = data
-      .filter(result => result.category === "SINGLE")
-      .sort((a, b) => Number(b.points) - Number(a.points))
-      .slice(0, 3);
+    // Update top participants using the new calculation method
+    const topParticipants = getTopParticipants(data);
     setTopSingleParticipants(topParticipants);
-  }, []);
+  }, [getTopParticipants]);
 
   const fetchResults = useCallback(async () => {
     try {
@@ -89,6 +119,7 @@ export const ResultsProvider = ({ children }) => {
       setError(error.message);
     } finally {
       setLoading(false);
+      setIsInitialFetch(false);
     }
   }, [processData]);
 
@@ -97,31 +128,42 @@ export const ResultsProvider = ({ children }) => {
     const channel = pusher.subscribe('results-channel');
 
     channel.bind('new-result', (data) => {
-      setResults(prevResults => {
-        const updatedResults = [...prevResults, data.result];
-        processData(updatedResults);
-        return updatedResults;
-      });
+      // Only update if we've completed initial fetch
+      if (!isInitialFetch) {
+        setResults(prevResults => {
+          // Check if result already exists
+          if (!prevResults.some(r => r._id === data.result._id)) {
+            const updatedResults = [...prevResults, data.result];
+            processData(updatedResults);
+            return updatedResults;
+          }
+          return prevResults;
+        });
+      }
     });
 
     channel.bind('update-result', (data) => {
-      setResults(prevResults => {
-        const updatedResults = prevResults.map(result =>
-          result._id === data.result._id ? data.result : result
-        );
-        processData(updatedResults);
-        return updatedResults;
-      });
+      if (!isInitialFetch) {
+        setResults(prevResults => {
+          const updatedResults = prevResults.map(result =>
+            result._id === data.result._id ? data.result : result
+          );
+          processData(updatedResults);
+          return updatedResults;
+        });
+      }
     });
 
     channel.bind('delete-result', (data) => {
-      setResults(prevResults => {
-        const updatedResults = prevResults.filter(result =>
-          result._id !== data.id
-        );
-        processData(updatedResults);
-        return updatedResults;
-      });
+      if (!isInitialFetch) {
+        setResults(prevResults => {
+          const updatedResults = prevResults.filter(result =>
+            result._id !== data.id
+          );
+          processData(updatedResults);
+          return updatedResults;
+        });
+      }
     });
 
     // Initial fetch
@@ -132,14 +174,16 @@ export const ResultsProvider = ({ children }) => {
       channel.unbind_all();
       channel.unsubscribe();
     };
-  }, [fetchResults, processData]);
+  }, [fetchResults, processData, isInitialFetch]);
 
-  const deleteResult = useCallback(async (id) => {
+  const addResult = useCallback(async (newData) => {
     try {
       setLoading(true);
-      await axios.delete(`${API}/api/${id}`);
+      const response = await axios.post(`${API}/api`, newData);
+      // Don't update state here - let Pusher handle it
+      return response;
     } catch (error) {
-      console.error("Delete error:", error);
+      console.error("Add error:", error);
       setError(error.message);
       throw error;
     } finally {
@@ -150,7 +194,9 @@ export const ResultsProvider = ({ children }) => {
   const editResult = useCallback(async (id, updatedData) => {
     try {
       setLoading(true);
-      await axios.put(`${API}/api/${id}`, updatedData);
+      const response = await axios.put(`${API}/api/${id}`, updatedData);
+      // Don't update state here - let Pusher handle it
+      return response;
     } catch (error) {
       console.error("Edit error:", error);
       setError(error.message);
@@ -160,12 +206,13 @@ export const ResultsProvider = ({ children }) => {
     }
   }, []);
 
-  const addResult = useCallback(async (newData) => {
+  const deleteResult = useCallback(async (id) => {
     try {
       setLoading(true);
-      await axios.post(`${API}/api`, newData);
+      await axios.delete(`${API}/api/${id}`);
+      // Don't update state here - let Pusher handle it
     } catch (error) {
-      console.error("Add error:", error);
+      console.error("Delete error:", error);
       setError(error.message);
       throw error;
     } finally {

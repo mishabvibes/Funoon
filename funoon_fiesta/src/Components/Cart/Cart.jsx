@@ -91,21 +91,27 @@ const Cart = () => {
         programName: "" 
     });
     const [deletingIds, setDeletingIds] = useState(new Set());
+    const [localResults, setLocalResults] = useState([]);  // Add this line
     const navigate = useNavigate();
+
+    // Add this useEffect
+    useEffect(() => {
+        setLocalResults(results);
+    }, [results]);
 
     useEffect(() => {
         refreshResults();
     }, []);
-    
 
-    const filteredResults = results.filter((result) =>
+    // Update this line to use localResults
+    const filteredResults = localResults.filter((result) =>
         result.programName.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     const handleEdit = (result) => navigate("/addresult", { state: { result } });
     
     const handleDeleteClick = (resultId) => {
-        const program = results.find(r => r._id === resultId);
+        const program = localResults.find(r => r._id === resultId);
         setModalState({ 
             isOpen: true, 
             resultId, 
@@ -120,9 +126,13 @@ const Cart = () => {
         if (resultId) {
             try {
                 setDeletingIds(prev => new Set([...prev, resultId]));
+                // Add this line for optimistic update
+                setLocalResults(prev => prev.filter(result => result._id !== resultId));
                 await deleteResult(resultId);
             } catch (error) {
                 console.error('Delete failed:', error);
+                // Add this line to revert on error
+                setLocalResults(results);
             } finally {
                 setDeletingIds(prev => {
                     const newSet = new Set(prev);
