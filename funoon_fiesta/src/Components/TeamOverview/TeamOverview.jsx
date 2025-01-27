@@ -264,13 +264,13 @@ const TeamOverview = () => {
           <div className='flex justify-between gap-4'>
             <button
               onClick={() => navigate('/scoretable')}
-              className="bg-secondery hover:bg-red-700 transition-colors py-2 sm:py-3 px-6 sm:px-8 md:px-12 lg:px-16 rounded-l-full text-base sm:text-lg md:text-xl text-white shadow-lg hover:shadow-xl transform-gpu transition-all duration-300 hover:scale-105"
+              className="bg-secondery hover:bg-red-700 transition-colors py-2 sm:py-3 px-3 sm:px-8 md:px-12 lg:px-16 rounded-l-full text-base sm:text-lg md:text-xl text-white shadow-lg hover:shadow-xl transform-gpu transition-all duration-300 hover:scale-105"
             >
-              More Results
+             ‎ ‎ ‎ ‎ ‎ ‎  More Results
             </button>
             <button
               onClick={() => navigate('/toppartficipants')}
-              className="bg-secondery hover:bg-red-700 transition-colors py-2 sm:py-3 px-6 sm:px-8 md:px-12 lg:px-16 rounded-r-full text-base sm:text-lg md:text-xl text-white shadow-lg hover:shadow-xl transform-gpu transition-all duration-300 hover:scale-105"
+              className="bg-secondery hover:bg-red-700 transition-colors py-2 sm:py-3 px-3 sm:px-8 md:px-12 lg:px-16 rounded-r-full text-base sm:text-lg md:text-xl text-white shadow-lg hover:shadow-xl transform-gpu transition-all duration-300 hover:scale-105"
             >
               Top Participants
             </button>

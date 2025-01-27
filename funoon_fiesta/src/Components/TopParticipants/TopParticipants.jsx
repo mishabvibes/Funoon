@@ -174,7 +174,7 @@ const TopParticipants = () => {
                                                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                                                             <div>
                                                                 <h3 className="text-lg font-bold text-gray-900 dark:text-white 
-                                                                    group-hover:text-red-600 dark:group-hover:text-red-400">
+                                                                    ">
                                                                     {participant.studentName}
                                                                 </h3>
                                                                 <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
@@ -182,8 +182,8 @@ const TopParticipants = () => {
                                                                 </p>
                                                             </div>
                                                             <div className="flex items-center gap-3">
-                                                                <span className="px-4 py-2 rounded-full bg-red-100 dark:bg-red-900 
-                                                                    text-red-600 dark:text-red-400 font-semibold text-sm">
+                                                                <span className="px-3 py-2 rounded-full bg-red-100 dark:bg-red-900 
+                                                                    text-red-600 dark:text-red-400 font-semibold text-xs">
                                                                     {details.totalPoints} total points
                                                                 </span>
                                                                 <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform 
