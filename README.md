@@ -1,5 +1,5 @@
 # 🎨 Funoon Fiesta
- 
+  
 🌐 Website: https://funoonfiesta.vercel.app/ 
 
 A dynamic MERN stack web application designed for our college art festival, **Funoon Fiesta**, combining creativity and technology to enhance the festival experience.
