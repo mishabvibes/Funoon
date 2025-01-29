@@ -6,8 +6,7 @@ import CursorAnimation from "./Components/Cursor/CursorAnimation";
 import { ProtectedRoute } from "./Components/AdminLogin/AdminLogin";
 import PWAInstallPrompt from "./Components/PWAInstallPrompt/PWAInstallPrompt";
 // import ComingSoon from "./Pages/ComingSoon";
-
-// Lazy load components with loading boundaries
+ 
 const Home = lazy(() => import("./Pages/Home"));
 const Result = lazy(() => import("./Pages/Result"));
 const Login = lazy(() => import("./Pages/Login"));

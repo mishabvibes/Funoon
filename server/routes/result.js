@@ -1,9 +1,8 @@
-// server/routes/result.js
 const express = require('express');
 const router = express.Router();
 const Result = require('../models/resultSchema');
 
-// Fetch all results
+
 router.get('/', async (req, res) => {
     try {
         const results = await Result.find();
@@ -13,11 +12,9 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Add a new result
 router.post('/', async (req, res) => {
     try {
         const result = await Result.create(req.body);
-        // Trigger Pusher event for new result
         req.pusher.trigger('results-channel', 'new-result', {
             result
         });
