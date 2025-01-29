@@ -110,7 +110,7 @@ npm run build
 ### Let's Make Art Digital Together!
 
 [![Email](https://img.shields.io/badge/Email-nusafaizabad@gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:nusafaizabad@gmail.com)
-[![Website](https://img.shields.io/badge/Website-funoon--fiesta.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://funoon-fiesta.vercel.app)
+[![Website](https://img.shields.io/badge/Website-funoon--fiesta.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://funoonfiesta.vercel.app/)
 
 </div>
 
