@@ -44,10 +44,10 @@ Transform your college art festival experience with our state-of-the-art digital
 
 <div align="center">
 
-| ![Home Dashboard](https://github.com/user-attachments/assets/2ee8c19b-5a5d-4256-bc67-9dcf30e65ee9) | ![Results Interface](https://github.com/user-attachments/assets/74c8d12d-f201-46ba-8c2b-eae82607ac26) | ![Live Scoreboard](https://github.com/user-attachments/assets/b5e3b143-93eb-4de5-8371-0aa7004bb596) |
+| ![image](https://github.com/user-attachments/assets/59075695-2d9e-4eed-8a7f-8500576fcc6d) | ![Results Interface](https://github.com/user-attachments/assets/74c8d12d-f201-46ba-8c2b-eae82607ac26) | ![Live Scoreboard](https://github.com/user-attachments/assets/b5e3b143-93eb-4de5-8371-0aa7004bb596) |
 |:---:|:---:|:---:|
-| **Interactive Dashboard** | **Real-time Results** | **Dynamic Scoreboard** |
-| Event timeline & updates | Live competition tracking | Points leaderboard |
+| **Home Page** | **Real-time Results** | **Dynamic Scoreboard** |
+| Result Over View | Live competition tracking | Points leaderboard |
 
 </div>
 
