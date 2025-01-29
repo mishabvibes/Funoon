@@ -3,9 +3,9 @@
 # 🎨 Funoon Fiesta
 ### Where Art Meets Innovation
 
-[![Live Demo](https://img.shields.io/badge/DEMO-Live%20Website-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white)](https://funoon-fiesta.vercel.app)
-[![PWA Status](https://img.shields.io/badge/PWA-Installable-6C47FF?style=for-the-badge&logo=pwa&logoColor=white)](https://funoon-fiesta.vercel.app)
-[![Made with Love](https://img.shields.io/badge/Made%20with-♥-ff0000?style=for-the-badge)](https://funoon-fiesta.vercel.app)
+[![Live Demo](https://img.shields.io/badge/DEMO-Live%20Website-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white)](https://funoonfiesta.vercel.app/)
+[![PWA Status](https://img.shields.io/badge/PWA-Installable-6C47FF?style=for-the-badge&logo=pwa&logoColor=white)](https://funoonfiesta.vercel.app/)
+[![Made with Love](https://img.shields.io/badge/Made%20with-♥-ff0000?style=for-the-badge)](https://funoonfiesta.vercel.app/)
 
 **Experience your college art festival in a whole new digital dimension**
 
