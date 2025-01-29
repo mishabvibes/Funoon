@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import Pusher from 'pusher-js';
-
+ 
 const ResultsContext = createContext();
 const API = import.meta.env.VITE_API_URL.replace(/\/$/, '');
 

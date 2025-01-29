@@ -1,4 +1,3 @@
-// server/index.js
 const express = require('express');
 const app = express();
 const Pusher = require('pusher');
@@ -12,7 +11,6 @@ const { errorHandle } = require('./middlewares/errorHandle');
 const connectDb = require('./config/db');
 require('dotenv').config();
 
-// Initialize Pusher
 const pusher = new Pusher({
   appId: process.env.PUSHER_APP_ID,
   key: process.env.PUSHER_KEY,
@@ -21,7 +19,6 @@ const pusher = new Pusher({
   useTLS: true
 });
 
-// Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100

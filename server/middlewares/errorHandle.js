@@ -4,7 +4,7 @@ const ERROR_MESSAGES = {
     AUTHENTICATION: 'Authentication error',
     DEFAULT: 'Please try again later'
 };
-
+ 
 const errorHandle = (error, req, res, next) => {
     console.error({
         timestamp: new Date().toISOString(),

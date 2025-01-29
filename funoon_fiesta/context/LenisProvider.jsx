@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import Lenis from '@studio-freight/lenis';
-
+ 
 const LenisContext = createContext({});
 
 export const useLenis = () => useContext(LenisContext);
